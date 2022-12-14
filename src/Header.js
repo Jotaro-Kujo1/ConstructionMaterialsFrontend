@@ -7,12 +7,14 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {Menu, MenuItem} from "@mui/material";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import {ConcreteTable} from "./Tables/ConcreteTable";
-import {MetalTable} from "./Tables/MetalTable";
+import {Route, Router} from "react-router-dom";
+import ConcreteTable from "./Tables/ConcreteTable";
+import MetalTable from "./Tables/MetalTable";
 import {NaturalTable} from "./Tables/NaturalTable";
 import {SolutionTable} from "./Tables/SolutionTable";
 import {ThermalInsulationTable} from "./Tables/ThermalInsulationTable";
+import {useEffect} from "react";
+
 
 
 
@@ -29,7 +31,33 @@ function appBarLabel(label: string) {
         setAnchorEl(null);
     };
 
+    const handeFlagTo1 = () => {
+        localStorage.setItem("flag", 1);
+        window.location.reload();
+    }
+
+    const handeFlagTo2 = () => {
+        localStorage.setItem("flag", 2);
+        window.location.reload();
+    }
+
+    const handeFlagTo3 = () => {
+        localStorage.setItem("flag", 3);
+        window.location.reload();
+    }
+
+    const handeFlagTo4 = () => {
+        localStorage.setItem("flag", 4);
+        window.location.reload();
+    }
+
+    const handeFlagTo5 = () => {
+        localStorage.setItem("flag", 5);
+        window.location.reload();
+    }
+
     return (
+        <>
         <Toolbar>
             <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} aria-controls={open ? 'basic-menu' : undefined}
                         aria-haspopup="true"
@@ -47,34 +75,26 @@ function appBarLabel(label: string) {
                 }}
             >
                 <MenuItem onClick={() => {
-                    window.location.assign('http://localhost:3000/concreteTable');
+                    handeFlagTo1()
                 }}>Concrete</MenuItem>
                 <MenuItem onClick={() => {
-                    window.location.assign('http://localhost:3000/metalTable');
+                    handeFlagTo2()
                 }}>Metal</MenuItem>
                 <MenuItem onClick={() => {
-                    window.location.assign('http://localhost:3000/naturalTable');
+                    handeFlagTo3()
                 }}>Natural</MenuItem>
                 <MenuItem onClick={() => {
-                    window.location.assign('http://localhost:3000/solutionTable');
+                    handeFlagTo4()
                 }}>Solution</MenuItem>
                 <MenuItem onClick={() => {
-                    window.location.assign('http://localhost:3000/thermalInsulation');
+                    handeFlagTo5()
                 }}>Thermal insulation</MenuItem>
             </Menu>
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                 {label}
             </Typography>
-            <Router>
-                <Routes>
-                    <Route path="/concreteTable" element={<ConcreteTable/>}/>
-                    <Route path="/metalTable" element={<MetalTable/>}/>
-                    <Route path="/naturalTable" element={<NaturalTable/>}/>
-                    <Route path="/solutionTable" element={<SolutionTable/>}/>
-                    <Route path="/thermalInsulation" element={<ThermalInsulationTable/>}/>
-                </Routes>
-            </Router>
         </Toolbar>
+    </>
     );
 }
 
@@ -87,8 +107,13 @@ const darkTheme = createTheme({
     },
 });
 
+
 export default function Header() {
+    useEffect(() => {
+        localStorage.setItem("flag", 1);
+    },[]);
     return (
+        <>
         <Stack spacing={2} sx={{ flexGrow: 1 }}>
             <ThemeProvider theme={darkTheme}>
                 <AppBar position="static" color="primary">
@@ -96,5 +121,8 @@ export default function Header() {
                 </AppBar>
             </ThemeProvider>
         </Stack>
+            {localStorage.getItem("flag") == 1 &&<ConcreteTable/>}
+            {localStorage.getItem("flag") == 2 &&<MetalTable/>}
+        </>
     );
 }
