@@ -7,6 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {Menu, MenuItem} from "@mui/material";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {ConcreteTable} from "./Tables/ConcreteTable";
+import {MetalTable} from "./Tables/MetalTable";
+import {NaturalTable} from "./Tables/NaturalTable";
+import {SolutionTable} from "./Tables/SolutionTable";
+import {ThermalInsulationTable} from "./Tables/ThermalInsulationTable";
 
 
 
@@ -40,15 +46,34 @@ function appBarLabel(label: string) {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleClose}>Concrete</MenuItem>
-                <MenuItem onClick={handleClose}>Metal</MenuItem>
-                <MenuItem onClick={handleClose}>Natural</MenuItem>
-                <MenuItem onClick={handleClose}>Solution</MenuItem>
-                <MenuItem onClick={handleClose}>Thermal insulation</MenuItem>
+                <MenuItem onClick={() => {
+                    window.location.assign('http://localhost:3000/concreteTable');
+                }}>Concrete</MenuItem>
+                <MenuItem onClick={() => {
+                    window.location.assign('http://localhost:3000/metalTable');
+                }}>Metal</MenuItem>
+                <MenuItem onClick={() => {
+                    window.location.assign('http://localhost:3000/naturalTable');
+                }}>Natural</MenuItem>
+                <MenuItem onClick={() => {
+                    window.location.assign('http://localhost:3000/solutionTable');
+                }}>Solution</MenuItem>
+                <MenuItem onClick={() => {
+                    window.location.assign('http://localhost:3000/thermalInsulation');
+                }}>Thermal insulation</MenuItem>
             </Menu>
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                 {label}
             </Typography>
+            <Router>
+                <Routes>
+                    <Route path="/concreteTable" element={<ConcreteTable/>}/>
+                    <Route path="/metalTable" element={<MetalTable/>}/>
+                    <Route path="/naturalTable" element={<NaturalTable/>}/>
+                    <Route path="/solutionTable" element={<SolutionTable/>}/>
+                    <Route path="/thermalInsulation" element={<ThermalInsulationTable/>}/>
+                </Routes>
+            </Router>
         </Toolbar>
     );
 }
