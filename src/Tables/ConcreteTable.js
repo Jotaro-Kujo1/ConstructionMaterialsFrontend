@@ -21,23 +21,29 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import {Button, TextField} from "@mui/material";
+import Stack from "@mui/material/Stack";
+import {useEffect, useState} from "react";
 
 
-function createData(name, calories, fat, carbs, protein) {
+function createData(id, name, density, color) {
     return {
+        id,
         name,
-        calories,
-        fat,
-        carbs,
-        protein,
+        density,
+        color
     };
 }
 
 const rows = [
-    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData("1","dsa","321","dsadsa")
+    /*
+    createData('Cupcake', 15, 15, 15, 15),
     createData('Donut', 452, 25.0, 51, 4.9),
     createData('Eclair', 262, 16.0, 24, 6.0),
     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData(id, name, density, color)
+     */
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -72,25 +78,25 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'name',
+        id: 'id',
         numeric: false,
         disablePadding: true,
         label: 'ID ',
     },
     {
-        id: 'calories',
+        id: 'name',
         numeric: true,
         disablePadding: false,
         label: 'Name',
     },
     {
-        id: 'fat',
+        id: 'density',
         numeric: true,
         disablePadding: false,
         label: 'Density ',
     },
     {
-        id: 'carbs',
+        id: 'color',
         numeric: true,
         disablePadding: false,
         label: 'Color ',
@@ -103,7 +109,6 @@ function EnhancedTableHead(props) {
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
-
     return (
         <TableHead>
             <TableRow>
@@ -154,9 +159,25 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-    const { numSelected } = props;
+    const handleClick = () => {
+        const newConcrete = {name,density,color};
+        console.log(newConcrete);
+        fetch("http://localhost:8081/concrete/saveConcrete",{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify(newConcrete)
+            }
+        ).then((response) => {
+            window.location.reload();
+        })
+    }
 
+    const[name,setName] = useState('');
+    const[density,setDensity] = useState('');
+    const[color,setColor] = useState('');
+    const { numSelected } = props;
     return (
+        <>
         <Toolbar
             sx={{
                 pl: { sm: 2 },
@@ -183,7 +204,7 @@ function EnhancedTableToolbar(props) {
                     id="tableTitle"
                     component="div"
                 >
-                    Nutrition
+                    Concrete
                 </Typography>
             )}
 
@@ -201,6 +222,34 @@ function EnhancedTableToolbar(props) {
                 </Tooltip>
             )}
         </Toolbar>
+            <Stack spacing={4} direction="row" className="stack">
+            <TextField
+                id="standard-textarea"
+                placeholder="Name"
+                multiline
+                variant="standard"
+                value={name}
+                onChange={e => setName(e.target.value)}
+            />
+            <TextField
+                id="standard-textarea"
+                placeholder="Density"
+                multiline
+                variant="standard"
+                value={density}
+                onChange={e => setDensity(e.target.value)}
+            />
+            <TextField
+                id="standard-textarea"
+                placeholder="Color"
+                multiline
+                variant="standard"
+                value={color}
+                onChange={e => setColor(e.target.value)}
+            />
+                <Button variant="contained" component="label" onClick={handleClick}>Save concrete</Button>
+            </Stack>
+        </>
     );
 }
 
@@ -209,6 +258,22 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function ConcreteTable() {
+    const [ans, setAns] = useState([]);
+    const query = async () => {
+        let res;
+        res = await fetch("http://localhost:8081/concrete/getAll");
+        const data = await res.json();
+        setAns(data);
+        console.log(ans);
+        //localStorage.setItem("posts", JSON.stringify(data));
+    }
+
+    useEffect(()=>{
+        query();
+        for(let i =0; i<ans.length; i++) {
+            createData(ans[i].id, ans[i].name, ans[i].density, ans[i].color);
+        }
+    },[]);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);

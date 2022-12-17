@@ -3,3 +3,20 @@
     top: 150px;
     font-size: 50px;
 }
+
+.stack {
+    position: relative;
+    left: 50px;
+    top: 20px;
+}
+
+.sendButton {
+    position: relative;
+    padding-top: 100px;
+}
+
+.tableName {
+    position: relative;
+    top: 150px;
+    text-align: center;
+}
