@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {Menu, MenuItem} from "@mui/material";
 import {Route, Router} from "react-router-dom";
-import ConcreteTable from "./Tables/ConcreteTable";
+import {ConcreteTable} from "./Tables/ConcreteTable";
 import {MetalTable} from "./Tables/MetalTable";
 import {NaturalTable} from "./Tables/NaturalTable";
 import {SolutionTable} from "./Tables/SolutionTable";
@@ -123,6 +123,9 @@ export default function Header() {
         </Stack>
             {localStorage.getItem("flag") == 1 &&<ConcreteTable/>}
             {localStorage.getItem("flag") == 2 &&<MetalTable/>}
+            {localStorage.getItem("flag") == 3 &&<NaturalTable/>}
+            {localStorage.getItem("flag") == 4 &&<SolutionTable/>}
+            {localStorage.getItem("flag") == 5 &&<ThermalInsulationTable/>}
         </>
     );
 }

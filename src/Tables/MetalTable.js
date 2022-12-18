@@ -147,7 +147,7 @@ export const MetalTable = () => {
             <Stack spacing={2} direction = "column">
                 <div className="sortArea">
                     <Stack spacing={2} direction="row">
-                        <h3 className="tableNamed">Concrete Table</h3>
+                        <h3 className="tableNamed">Metal Table</h3>
                         <IconButton color="primary" aria-label="upload picture" component="label" className="sortBtn" onClick={querySort}>
                             <SortByAlphaIcon/>
                         </IconButton>
