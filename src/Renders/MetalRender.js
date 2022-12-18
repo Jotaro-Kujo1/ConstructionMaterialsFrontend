@@ -45,7 +45,47 @@ export const MetalRender = (props) => {
             />
             </div>
         </>
-    ) : console.log("error");
+    ) :
+        <>
+            <div className="oneRecordRender">
+                <TextField
+                    id="outlined-read-only-input"
+                    defaultValue={records["id"]}
+                    InputProps={{
+                        readOnly: true,
+                    }}
+                />
+                <TextField
+                    id="outlined-read-only-input"
+                    defaultValue={records["name"]}
+                    InputProps={{
+                        readOnly: true,
+                    }}
+                />
+                <TextField
+                    id="outlined-read-only-input"
+                    defaultValue={records["hardness"]}
+                    InputProps={{
+                        readOnly: true,
+                    }}
+                />
+                <TextField
+                    id="outlined-read-only-input"
+                    defaultValue={records["meltingTemperature"]}
+                    InputProps={{
+                        readOnly: true,
+                    }}
+                />
+                <TextField
+                    id="outlined-read-only-input"
+                    defaultValue={records["electricalConductivity"]}
+                    InputProps={{
+                        readOnly: true,
+                    }}
+                />
+            </div>
+        </>
+
         return(
           <>
               {elements}
